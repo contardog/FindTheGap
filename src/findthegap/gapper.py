@@ -1,7 +1,7 @@
 import numpy as np
 import torch
 import scipy.optimize as op
-from gappy.quarticKDE import QuarticKDE
+from findthegap.quarticKDE import QuarticKDE
 
 
 def check_boundary(pt, boundaries):
@@ -17,11 +17,11 @@ def check_boundary(pt, boundaries):
 	return (np.any(low_ >0) or np.any(sup_ > 0))   
   
 
-class Gaper():
+class Gapper():
 	
 	def __init__(self, X, bw, bounds=None):
 		"""
-		Gaper object providing tools to compute density estimate through a QuarticKDE,
+		Gapper object provides tools to compute density estimate through a QuarticKDE,
 		statistics like gradient, Hessian and PiHPi (projection of the Hessian into 
 		the orthogonal subspace of the density gradient), finding critical points and
 		computing their paths'.
