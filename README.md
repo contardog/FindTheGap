@@ -1,20 +1,23 @@
-## Gappy
+## MindTheGap
 
+This package provides tools for geometric data analysis, targeted at finding gaps and valleys in data distribution. It provides a (twice-differentiable) density estimator (Quartic Kernel Density Estimator) relying on pytorch for auto-differentaition, and methods to estimate critical points in the density as well as various statistics to identify and trace `gaps' and valleys in the distribution. See https://github.com/contardog/mindthegap for demo and usecase notebook in the folder 'examples'.
 
-Python-based tools to find gaps, valleys, critical points, in data distribution, using Quartic Kernel Density Estimation (twice differentiable) with pytorch.
+This can be installed through pip:
 
-Can be installed through pip:
-pip install gappy 
+```
+pip install mindthegap 
+```
 
-Examples can be found in the jupyter notebook in folder ---
 
 Dependencies:
-	numpy >= 1.19.5
-	torch >= 1.10.1
-	scipy >= 1.5.4
+* numpy >= 1.19.5
+
+* torch >= 1.10.1
+
+* scipy >= 1.5.4
 
 
-Notebook:
+Notebook requirements:
 galpy, sklearn, astropy, matplotlib
 
 

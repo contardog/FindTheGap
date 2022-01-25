@@ -17,11 +17,11 @@ def check_boundary(pt, boundaries):
 	return (np.any(low_ >0) or np.any(sup_ > 0))   
   
 
-class Gapper():
+class Gaper():
 	
 	def __init__(self, X, bw, bounds=None):
 		"""
-		Gapper object providing tools to compute density estimate through a QuarticKDE,
+		Gaper object providing tools to compute density estimate through a QuarticKDE,
 		statistics like gradient, Hessian and PiHPi (projection of the Hessian into 
 		the orthogonal subspace of the density gradient), finding critical points and
 		computing their paths'.
@@ -488,7 +488,7 @@ class Gapper():
 
 
 		Output:
-		- pihpi: the (d,d) matrix PiHPi 
+		- pihpi: numpy array of size (d,d). matrix PiHPi 
 
 		TODO add an assert or some stuff that g H assumed numpy array
 		"""
