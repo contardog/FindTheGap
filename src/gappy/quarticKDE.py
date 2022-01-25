@@ -41,7 +41,7 @@ class QuarticKDE():
 		"""
 		## inputs:
 		- `X` array `(n, d)`: `n` points with `d` dimensions to which KDE will be fit
-		- `bw` numeric: inverse bandwidth (or spatial scale) for Gaussian kernel
+		- `bw` numeric: inverse bandwidth (or spatial scale) for kernel
 
 		
 		"""
@@ -55,7 +55,14 @@ class QuarticKDE():
 
 	def score_samples(self, Y):
 		"""
-		return densities at points Y
+		Return densities estimate at points Y
+
+		Input:
+		- 'Y': torch tensor of size (n, d) of points
+
+		Output:
+		- torch tensor of size (n) 
+
 		BUG: Use of self.prefactor needs to be audited?
 		"""
 		if len(list(Y.shape)) == 1:
@@ -86,15 +93,13 @@ class QuarticKDE():
 	def log_prob(self, Y):
 		"""Returns the total log probability of one or more points, `Y`.
 
-		Parameters
-		----------
-		Y : array (m, d)
+		Input:
+		- Y : array (m, d)
 		  `m` points with `d` dimensions for which the probability density will
 		  be calculated
 
-		Returns
-		-------
-		log_prob : numeric
+		Output:
+		- log_prob : numeric
 		  total log probability density for the queried points, `Y`
 		"""
 		m, d = Y.shape
