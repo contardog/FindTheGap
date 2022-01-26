@@ -18,8 +18,8 @@ Dependencies:
 
 
 Notebook requirements:
-galpy, sklearn, astropy, matplotlib
+sklearn, matplotlib
 
 
 
-Authors: Gabriella Contardo (CCA at Simons Foundation), David W. Hogg(CCA/NYU/MPIA)
+Contributors: Gabriella Contardo (CCA at Simons Foundation), David W. Hogg(CCA/NYU/MPIA), Jason S.A. Hunt (CCA)
