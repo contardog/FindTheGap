@@ -175,6 +175,7 @@ class Gapper():
 		
 		This code remove critical points landing outside of boundaries defined at the begining
 
+
 		Inputs:
 		-x: numpy array of size d. Starting location to optimize squared gradient of density to find 
 		critical point.
@@ -205,7 +206,10 @@ class Gapper():
 		"""
 		Do the optimization search for critical points over a meshgrid of locations.
 		Resulting points are then grouped into 'close points' if they're under some distance threshold 
-		(default distance is a function of bandwidth .01 * (bw**2))
+		(default distance is a function of bandwidth .01 * (bw**2)): this might NOT be ideal?!
+
+		Disclaimer: take this function with a pinch of salt / caveat possible....
+		This does NOT (yet?) check if the actual gradient-squared is close to zero (i.e. 'true' minima).
 
 		Inputs: 
 		- grid_mesh: list of locations to build the meshgrid.
@@ -290,13 +294,13 @@ class Gapper():
 					  n_iter=1000, sign=1):
 		
 		"""
-		 This function takes a critical point as input, takes one step in the direction of the XXXX eigen-vector
-		 of the Hessian of the density estmate at that point and then perform gradient descent following the 
+		 This function takes a critical point as input, takes one step in the direction of the eigen-vector
+		 of the Hessian of the density estmate at that point with the smallest eigenvalue and then perform gradient descent following the 
 		 (normalized) gradient of the density. 
 
 		 Input:
 		 - critical_pt: numpy array size (d). A critical point from which to compute the gradient descent 
-		 - first_eps: float. Factor for first step in the direction of XXX eigen-vector of the Hessian
+		 - first_eps: float. Factor for first step in the direction of eigen-vector of the Hessian with smallest eigenvalue
 		 - eps_step: float. Factor for the gradient descent step 
 		 - thresh_gg: float. Stopping criterion for minimum value of (squared) gradient reached for the descent.
 		 - n_iter: int. max number of iterations for gradient descent / max length of the paths
@@ -310,7 +314,7 @@ class Gapper():
 				'lowg' = gradient threshold (thresh_gg) is reached 
 				'maxiter' = number of iterations max (n_iter) is reached 
 
-		 Fix: TODO!! Second or smallest eigenvector?!?!?!
+		 Fix: 
 		 Can critical points have nan grad?? Do we like that list_pts is nan if nangrad? 
 		 Could we replace this code with scipy optim? (but need evenly spaced?)
 		 Think if better to have warning/raise error or what depending on the stopping case?
@@ -342,10 +346,10 @@ class Gapper():
 
 		id_sort = np.argsort(eig_val)[::-1]
 		eig_val = eig_val[id_sort]
-		eig_vec = eig_vec[:,id_sort]
+		eig_vec = eig_vec[id_sort]
 
 		## Are we still using u2 tho ?? or the lowest ?
-		u2 = eig_vec[:,1]
+		u2 = eig_vec[-1]
 		
 
 
@@ -392,7 +396,8 @@ class Gapper():
 
 		Inputs:
 		- crit_pt : critical point to start from 
-		- first_eps: float. Factor for first step in the direction of XXX eigen-vector of the Hessian
+		- first_eps: float. Factor for first step in the direction of the eigen-vector
+		 of the Hessian at that point with the smallest eigenvalue
 			default: bandwidth
 		 - eps_step: float. Factor for the gradient descent step 
 		 	default: bandwidth * .1
@@ -469,7 +474,7 @@ class Gapper():
 
 		id_sort = np.argsort(_eig_val)[::-1]
 		_eig_val = _eig_val[id_sort]
-		_eig_vec = _eig_vec[:,id_sort]
+		_eig_vec = _eig_vec[id_sort]
 
 		return _eig_val, _eig_vec, dens_est.detach().numpy(), g[0].detach().numpy(), _H
 
