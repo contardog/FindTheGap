@@ -251,7 +251,7 @@ class Gapper():
 
 		# group into close points, based on the bw
 		groups = np.zeros(len(bigxs)).astype(int) - 1
-		print(len(bigxs), len(groups))
+		#print(len(bigxs), len(groups))
 		for i in range(len(bigxs)):
 			if groups[i] >= 0:
 				continue
@@ -353,9 +353,9 @@ class Gapper():
 
 		id_sort = np.argsort(eig_val)[::-1]
 		eig_val = eig_val[id_sort]
-		eig_vec = eig_vec[id_sort]
+		eig_vec = eig_vec[:, id_sort]
 
-		## Are we still using u2 tho ?? or the lowest ?
+		
 		u2 = eig_vec[-1]
 		
 
@@ -481,7 +481,7 @@ class Gapper():
 
 		id_sort = np.argsort(_eig_val)[::-1]
 		_eig_val = _eig_val[id_sort]
-		_eig_vec = _eig_vec[id_sort]
+		_eig_vec = _eig_vec[:,id_sort]
 
 		return _eig_val, _eig_vec, dens_est.detach().numpy(), g[0].detach().numpy(), _H
 
