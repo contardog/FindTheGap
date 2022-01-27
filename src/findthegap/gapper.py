@@ -222,6 +222,7 @@ class Gapper():
 		- numpy array of resulting critical points (n, d)
 
 		Fix: Do we have opinion on the grouping distance choice?
+		Merge with below
 		"""
 		if distance_to_group is None:
 			distance_to_group = 0.01 * self.bw * self.bw # magic
@@ -273,6 +274,8 @@ class Gapper():
 		This function creates a grid of starting points (spaced by 'bandwidth' space) within boundaries 
 		and optimize to find an estimation of all the critical points of the density estimate.
 
+		Disclaimer: take this function with a pinch of salt / caveat possible....
+		
 		Inputs: 
 		- distance_to_group: float. Controls the max distance threshold to group 2 critical points together.
 			Default is .01 * bw * bw
@@ -281,12 +284,16 @@ class Gapper():
 
 		Output:
 		- numpy array of resulting critical points (n, d)
+
+		Fix: Merge with the above function or clean
+		But give possibility to change the gridding for the starting meshgrid
 		"""
 		# make grid of initial points
 		bounds = self.bounds
 		grid_mesh = [ np.arange(bounds[d][0] + .5 * self.bw, bounds[d][1], self.bw) for d in range(self.dim) ]
 
-		return self.compute_crit_points_setmesh(grid_mesh)
+		return self.compute_crit_points_setmesh(grid_mesh, distance_to_group=distance_to_group,
+			max_iter=max_iter, gtol=gtol)
 	
 
 
