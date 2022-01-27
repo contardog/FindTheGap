@@ -350,16 +350,15 @@ class Gapper():
 
 		H = torch.autograd.functional.hessian(self.kde.score_samples, a_point).detach().numpy()
 		eig_val, eig_vec = np.linalg.eigh(H)
+		#The column eig_vec[:, i] is the normalized eigenvector corresponding to the eigenvalue w[i].
+		#eigenvalue (and corresponding eig_vec) already sorted by ascending order
 
-		id_sort = np.argsort(eig_val)[::-1]
-		eig_val = eig_val[id_sort]
-		eig_vec = eig_vec[:, id_sort]
+		# id_sort = np.argsort(eig_val)[::-1]
+		# eig_val = eig_val[id_sort]
+		# eig_vec = eig_vec[:,id_sort]
 
+		u2 = eig_vec[:,0]
 		
-		u2 = eig_vec[-1]
-		
-
-
 		new_point = np.array(a_point.detach().numpy() - sign * first_eps * u2) 
 		list_pts.append(new_point)
 
@@ -447,10 +446,10 @@ class Gapper():
 		- pt, a numpy array of size d. 
 
 		Output: 
-		- _eig_val: numpy array of size (d). Eigenvalues (sorted in descending order) of the Hessian of density 
-			at that point
-		- _eig_vec: numpy array of size (d,d). Eigenvectors (corresponding to eigenvalues) of the Hessian of
-			density at that point
+		- _eig_val: numpy array of size (d). Eigenvalues (sorted in ascending order) of the Hessian of density 
+			at that point (following numpy.linalg.eigh doc)
+		- _eig_vec: numpy array of size (d,d). The column eig_vec[:, i] is the normalized eigenvector corresponding
+		to the eigenvalue _eig_val[i] (sorted in ascending order) (following numpy.linalg.eigh doc)
 		- dens_est : density estimate at that point.
 		- g: numpy array of size (d). Gradient of density estimate at that point
 		- _H: numpy array of size (d,d). Hessian matrix of density estimate at that point
@@ -477,11 +476,14 @@ class Gapper():
 
 		_H = torch.autograd.functional.hessian(self.kde.score_samples, a_point).detach().numpy()#, create_graph=True)
 		
-		_eig_val, _eig_vec = np.linalg.eigh(_H) ## or eig? 
+		_eig_val, _eig_vec = np.linalg.eigh(_H) 
+		#The column eig_vec[:, i] is the normalized eigenvector corresponding to the eigenvalue w[i].
+		#eigenvalue (and corresponding eig_vec) already sorted by ascending order
 
-		id_sort = np.argsort(_eig_val)[::-1]
-		_eig_val = _eig_val[id_sort]
-		_eig_vec = _eig_vec[:,id_sort]
+		
+		# id_sort = np.argsort(_eig_val)[::-1]
+		# _eig_val = _eig_val[id_sort]
+		# _eig_vec = _eig_vec[:, id_sort]
 
 		return _eig_val, _eig_vec, dens_est.detach().numpy(), g[0].detach().numpy(), _H
 
