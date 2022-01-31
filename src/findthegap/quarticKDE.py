@@ -57,7 +57,7 @@ class QuarticKDE():
 		"""
 		Return densities estimate at points Y. 
 		This function makes chunks of the Y to avoid memory overflow but computes
-		query_ball_point on 'batches' of size_chunk
+		query_ball_point on 'batches' of size_chunk. This might actually not help with speed...
 
 		Input:
 		- 'Y': torch tensor of size (n, d) of points
@@ -112,6 +112,7 @@ class QuarticKDE():
 		BUG: Use of self.prefactor needs to be audited?
 
 		Fix: verify unsqueeze(1) or 0?
+		This doesnt seem to be actually faster....??
 		"""
 		if len(list(Y.shape)) == 1:
 			thisY = Y.unsqueeze(1) ### I think this should be unsqueeze(1)?
@@ -154,6 +155,8 @@ class QuarticKDE():
 		"""
 		Return densities estimate at points Y.
 		This function does not make 'batch' (process Ys one by one)
+
+		I think in the end this one is more efficient in terms of speed?? And no memory problem(?)
 
 		Input:
 		- 'Y': torch tensor of size (n, d) of points
