@@ -127,7 +127,7 @@ class Gapper():
 		--------
 		Fix: 
 		gridding size is one number fo all dim...
-
+		TODO!!: add param for requires_grad? Default is false
 
 		"""
 		bounds = self.bounds
