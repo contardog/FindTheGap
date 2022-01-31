@@ -67,10 +67,9 @@ class QuarticKDE():
 
 		BUG: Use of self.prefactor needs to be audited?
 
-		Fix: verify unsqueeze(1) or 0?
 		"""
 		if len(list(Y.shape)) == 1:
-			thisY = Y.unsqueeze(1) ### I think this should be unsqueeze(1)?
+			thisY = Y.unsqueeze(0) 
 		else:
 			thisY = Y
 		m, d = thisY.shape
@@ -111,11 +110,10 @@ class QuarticKDE():
 
 		BUG: Use of self.prefactor needs to be audited?
 
-		Fix: verify unsqueeze(1) or 0?
 		This doesnt seem to be actually faster....??
 		"""
 		if len(list(Y.shape)) == 1:
-			thisY = Y.unsqueeze(1) ### I think this should be unsqueeze(1)?
+			thisY = Y.unsqueeze(0)
 		else:
 			thisY = Y
 		m, d = thisY.shape
@@ -169,7 +167,7 @@ class QuarticKDE():
 		Fix: verify unsqueeze(1) or 0?
 		"""
 		if len(list(Y.shape)) == 1:
-			thisY = Y.unsqueeze(1) ### I think this should be unsqueeze(1)?
+			thisY = Y.unsqueeze(0) 
 		else:
 			thisY = Y
 		m, d = thisY.shape
