@@ -27,3 +27,5 @@ Disclaimer: this code is work in progress and might go through some changes espe
 
 
 Contributors: Gabriella Contardo (CCA at Simons Foundation), David W. Hogg(CCA/NYU/MPIA), Jason S.A. Hunt (CCA)
+
+You can find more information about the methods in the paper "The emptiness inside: Finding gaps, valleys, and lacunae with geometric data analysis" https://arxiv.org/abs/2201.10674 
