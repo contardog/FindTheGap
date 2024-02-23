@@ -189,8 +189,15 @@ class Gapper():
 		Fix TODO: This code should also check that g2f(x)[0] is close to zero?
 		"""
 		bounds = self.bounds
-		res = op.minimize(self.g2f, x, jac=True, method="bfgs",
-					options={"gtol": gtol, "maxiter": max_iter})
+		#res = op.minimize(self.g2f, x, jac=True, method="bfgs",
+		#			options={"gtol": gtol, "maxiter": max_iter})
+		
+		
+		## Least Squares seem to perform better / avoid some issues that we saw with bfgs
+		## However: this is a bit concerning so might be good to investigate around...
+		
+		res = op.least_squares(self.get_grad_density, x, args={create_graph:False})
+		
 		xx = res.x
 
 		if check_boundary(xx, bounds):
